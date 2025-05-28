@@ -9,4 +9,11 @@ export default defineConfig({
     tailwindcss(),
   
   ],
+  theme: {
+  extend: {
+    fontFamily: {
+      sans: ['Inter', 'sans-serif'],
+    },
+  },
+}
 })
