@@ -1,25 +1,22 @@
-import { useState, useEffect, useRef } from "react"
-import React from 'react'
+import { useState, useEffect, useRef } from "react";
+import React from "react";
 
 const Dashboard = () => {
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(0);
     const dropdownRef = useRef(null);
     const buttonRef = useRef(null);
     const [selectedFile, setSelectedFile] = useState("select file");
 
     function toggleDropdown() {
-        if (dropdownRef.current) {
-            dropdownRef.current.classList.toggle("hidden");
-        }
+        dropdownRef.current?.classList.toggle("hidden");
     }
 
     function handleFileSelect(file) {
-        setSelectedFile(file)
+        setSelectedFile(file);
         dropdownRef.current?.classList.add("hidden");
     }
 
     useEffect(() => {
-
         function handleClickOutside(event) {
             if (
                 dropdownRef.current &&
@@ -31,82 +28,64 @@ const Dashboard = () => {
             }
         }
 
-        window.addEventListener("click", handleClickOutside)
+        window.addEventListener("click", handleClickOutside);
         return () => {
-            window.addEventListener("click", handleClickOutside)
+            window.removeEventListener("click", handleClickOutside);
         };
     }, []);
 
-
-    window.addEventListener("click", function (e) {
-        const button = document.getElementById("dropdown-button");
-        const menu = document.getElementById("dropdown-menu");
-        if (!button.contains(e.target) && !menu.contains(e.target)) {
-            menu.classList.add("hidden");
-        }
-    });
-
-
     return (
-        <div className='h-lvh  place-content-center flex justify-around m-5 border'>
+        <div className="min-h-screen flex items-center justify-center">
+            <div className="flex flex-col items-center gap-4 p-6 w-full border rounded-md">
 
-            <div className='w-150  place-content-center'>
-                <div className='border h-10 rounded-md'>
-
+                {/* Dropdown Button */}
+                <div className="relative w-1/2  ">
                     <button
                         ref={buttonRef}
                         onClick={toggleDropdown}
-                        className="bg-blue-500 text-white w-150 h-10 rounded-md px-4 flex items-center justify-between gap-2"
+                        className="bg-blue-500 text-white w-full h-10 rounded-md px-4 flex items-center justify-between"
                     >
                         {selectedFile}
                         <span className="ml-2">▼</span>
                     </button>
+
                     <div
                         ref={dropdownRef}
-                        className="hidden absolute mt-2 w-150 bg-white border rounded-md shadow-lg z-10"
+                        className="hidden absolute mt-2 w-full bg-white border rounded-md shadow-lg z-10"
                     >
-                        <p
-                            className="block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleFileSelect("file-1")}
-                        >
-                            file-1
-                        </p>
-                        <p
-                            className="block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleFileSelect("file-2")}
-                        >
-                            file-2
-                        </p>
-                        <p
-                            className="block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                            onClick={() => handleFileSelect("file-3")}
-                        >
-                            file-3
-                        </p>
+                        {["file-1", "file-2", "file-3"].map(file => (
+                            <p
+                                key={file}
+                                className="block px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                                onClick={() => handleFileSelect(file)}
+                            >
+                                {file}
+                            </p>
+                        ))}
                     </div>
                 </div>
-            </div>
 
-            <div className='w-50  place-content-center'>
-                <div className="border h-10 w-40 rounded-md flex justify-center bg-emerald-300">
-                    <button onClick={() => { setCount(count + 1) }}>
-                        {count}
-                        View
-                    </button>
+                {/* View Button */}
+                <div className="relative w-1/2  ">
+                    <div className="border h-10 w-full rounded-md flex justify-center items-center bg-emerald-300">
+                        <button onClick={() => setCount(count + 1)}>
+                            {count} View
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <div className='w-50  place-content-center'>
-                <div className="border h-10 w-40 rounded-md flex justify-center bg-gray-500">
-                    <button>
-                        Download
-                    </button>
+                {/* Download Button */}
+                <div className="relative w-1/2 ">
+                    <div className="border h-10 w-full rounded-md flex justify-center items-center bg-gray-500 text-white">
+                        <button>
+                            Download
+                        </button>
+                    </div>
                 </div>
+
             </div>
-
-
         </div>
-    )
-}
+    );
+};
 
-export default Dashboard
+export default Dashboard;
