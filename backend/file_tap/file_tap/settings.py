@@ -134,3 +134,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # google cred
 GOOGLE_DRIVE_FOLDER_ID = "1yG8TUS8OhkLTcgox-Ttttdh5DiFCn2Y7"
+SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
+SERVICE_ACCOUNT_FILE = "credentials/credentials.json"

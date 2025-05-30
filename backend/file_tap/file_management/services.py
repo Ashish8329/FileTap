@@ -3,9 +3,10 @@ import io
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
+from django.conf import settings
 
-SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
-SERVICE_ACCOUNT_FILE = "credentials/credentials.json"
+SCOPES = settings.SCOPES
+SERVICE_ACCOUNT_FILE = settings.SERVICE_ACCOUNT_FILE
 
 
 def get_drive_service():
