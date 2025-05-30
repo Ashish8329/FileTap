@@ -11,8 +11,6 @@ from .models import UploadedFile
 from .serializers import FileManagementSerializer
 from .services import download_file_from_drive, search_file_in_drive
 
-GOOGLE_DRIVE_FOLDER_ID = "1yG8TUS8OhkLTcgox-Ttttdh5DiFCn2Y7"
-
 
 class FileManagementViewSet(viewsets.ModelViewSet):
     """
@@ -43,42 +41,54 @@ class CheckLocalFileViewSet(APIView):
             file_url = request.build_absolute_uri(
                 os.path.join(settings.MEDIA_URL, "text_files", filename)
             )
+
             return success_response(
                 message="File is available locally.", data={"file_path": file_url}
             )
 
         # check the file in the google drive
-        file = search_file_in_drive(filename, GOOGLE_DRIVE_FOLDER_ID)
+        file = search_file_in_drive(filename, settings.GOOGLE_DRIVE_FOLDER_ID)
 
         if file:
-            return success_response(
-                message="File is available in drive.", data={"file_id": file["id"]}
-            )
-        else:
-            return error_response(message="File not found locally or on Google Drive.")
+            # download the file from google drive to system
+            destination_dir = "media/text_files"
+            os.makedirs(destination_dir, exist_ok=True)
+            destination_path = os.path.join(destination_dir, filename)
+
+            try:
+                download_file_from_drive(file["id"], destination_path)
+                file_url = request.build_absolute_uri(f"/media/text_files/{filename}")
+                return success_response(
+                    message="File is available in google drive.", data=file_url
+                )
+
+            except Exception as e:
+                return error_response(message=f"error : str{e}")
+
+        return error_response(message="File not found locally or on Google Drive.")
 
 
-class DownloadGoogleDriveFileView(APIView):
-    """
-    this api is used to download the google drive file in the system.
-    """
+# class DownloadGoogleDriveFileView(APIView):
+#     """
+#     this api is used to download the google drive file in the system.
+#     """
 
-    def post(self, request):
+#     def post(self, request):
 
-        file_id = request.query_params.get("file_id")
-        file_name = request.query_params.get("file_name")
+#         file_id = request.query_params.get("file_id")
+#         file_name = request.query_params.get("file_name")
 
-        if not file_id or not file_name:
-            return error_response(message="file_id and file_name are required")
+#         if not file_id or not file_name:
+#             return error_response(message="file_id and file_name are required")
 
-        destination_dir = "media/text_files"
-        os.makedirs(destination_dir, exist_ok=True)
-        destination_path = os.path.join(destination_dir, file_name)
+#         destination_dir = "media/text_files"
+#         os.makedirs(destination_dir, exist_ok=True)
+#         destination_path = os.path.join(destination_dir, file_name)
 
-        try:
-            download_file_from_drive(file_id, destination_path)
-            file_url = request.build_absolute_uri(f"/media/text_files/{file_name}")
-            return success_response(message="downloaded", data=file_url)
+#         try:
+#             download_file_from_drive(file_id, destination_path)
+#             file_url = request.build_absolute_uri(f"/media/text_files/{file_name}")
+#             return success_response(message="downloaded", data=file_url)
 
-        except Exception as e:
-            return error_response(message=f"error : str{e}")
+#         except Exception as e:
+#             return error_response(message=f"error : str{e}")

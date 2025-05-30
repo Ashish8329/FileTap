@@ -131,3 +131,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # media files
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# google cred
+GOOGLE_DRIVE_FOLDER_ID = "1yG8TUS8OhkLTcgox-Ttttdh5DiFCn2Y7"
