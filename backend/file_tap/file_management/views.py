@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.utils.html import escape
 from rest_framework import viewsets
 from rest_framework.views import APIView
+from .utils import process_view_text_file
 
 from base.utils import error_response, success_response
 
@@ -21,6 +22,15 @@ class FileManagementViewSet(viewsets.ModelViewSet):
 
     queryset = UploadedFile.objects.all()
     serializer_class = FileManagementSerializer
+
+    def list(self, request, *args, **kwargs):
+        data = self.get_queryset()
+
+        if data.exists():
+            serializer = FileManagementSerializer(data, many=True)
+            return success_response(data= serializer.data)
+
+        return error_response(message="No files found")
 
 
 class CheckLocalFileViewSet(APIView):
@@ -44,9 +54,7 @@ class CheckLocalFileViewSet(APIView):
                 os.path.join(settings.MEDIA_URL, "text_files", filename)
             )
 
-            return success_response(
-                message="File is available locally.", data={"file_path": file_url}
-            )
+            return process_view_text_file(filename, message="File is available locally.")
 
         # check the file in the google drive
         file = search_file_in_drive(filename, settings.GOOGLE_DRIVE_FOLDER_ID)
@@ -60,9 +68,8 @@ class CheckLocalFileViewSet(APIView):
             try:
                 download_file_from_drive(file["id"], destination_path)
                 file_url = request.build_absolute_uri(f"/media/text_files/{filename}")
-                return success_response(
-                    message="File is available in google drive.", data=file_url
-                )
+                
+                return process_view_text_file(filename, message="File is available in google drive")
 
             except Exception as e:
                 return error_response(message=f"error : str{e}")
