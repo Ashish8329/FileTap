@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getFileNames } from "../apis/getFiles";
 import { processTextFile } from "../apis/viewTextFile";
+import { showErrorToast, showSuccessToast } from "../utils/toast";
 
 const Dashboard = () => {
     const dropdownRef = useRef(null);
     const buttonRef = useRef(null);
-
     const [fileList, setFileList] = useState([]);
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -30,9 +30,14 @@ const Dashboard = () => {
 
         try {
             const res = await processTextFile(fileKey); // this should be an API call
-            console.log("View response:", res);
+            showSuccessToast(res.message)
+
+            if (!res.success) {
+                showErrorToast(res.error)
+            }
             // Handle response logic: open in notepad if successful
         } catch (error) {
+            showErrorToast(error)
             console.error("Error viewing file:", error);
         }
     };

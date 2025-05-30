@@ -7,7 +7,6 @@ export const processTextFile = async (file_name) => {
         });
         
         const data = await res.json();
-
         if (!res.ok || data?.status?.code !== 200) {
             const errorMessage = data?.status?.message || 'Something went wrong!';
             throw new Error(errorMessage);
