@@ -46,6 +46,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  
+    'django.middleware.common.CommonMiddleware',
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -136,3 +138,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 GOOGLE_DRIVE_FOLDER_ID = "1yG8TUS8OhkLTcgox-Ttttdh5DiFCn2Y7"
 SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 SERVICE_ACCOUNT_FILE = "credentials/credentials.json"
+
+# Allow your frontend origin (e.g., Vite/React dev server)
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5173",
+    "http://localhost:5173",
+]
