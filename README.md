@@ -1,42 +1,47 @@
 # FileTap - File Management System 📂🚀
 
-Welcome to the **FileTap** repository!  
-**FileTap** is a Django-powered system designed to manage and share files seamlessly. It supports multilingual content, efficient file uploads, metadata tagging, and modern development practices with performance in mind.
+Welcome to **FileTap** – a streamlined Django + React application for managing, viewing, and downloading files.  
+It also integrates with Google Drive APIs to verify and process file content securely.
 
 ---
 
 ## ✨ Key Features
 
-- **🌍 Multi-language Support**  
-  Interface and metadata available in multiple languages (e.g., English, Hindi, Bengali), adapting to user preferences via `?lang=` query parameter.
-
 - **📁 File Upload & Metadata Management**  
-  Upload, categorize, and tag files with custom metadata for easier retrieval.
+  Upload `.txt` files and manage them via the Django Admin panel.
 
-- **📝 Rich Text Support**  
-  Descriptions and file notes support formatted content using `django-ckeditor`.
+- **📥 File Download**  
+  Easily download selected files through the React dashboard.
 
-- **🔗 RESTful API**  
-  Easily access and manage files using a fully documented REST API with multilingual support.
+- **📝 View Files (e.g., Notepad-style)**  
+  Open and view file contents (like `text-1.txt`) through the UI — the backend handles logic using Django APIs.
 
-- **⚡ High Performance with Caching**  
-  Implements Redis-based caching to accelerate file access and metadata lookup.
+- **✅ Google Drive File Check**  
+  Validates files using the Google Drive API to ensure correct permissions and accessibility before processing.
 
-- **🔄 Automated Metadata Translation**  
-  Uses `googletrans` for translating file descriptions and metadata. Falls back to English if unavailable.
+- **🔧 RESTful API (DRF)**  
+  Built with Django REST Framework, offering clean, modular, and reusable endpoints.
 
-- **🛠️ Admin Panel**  
-  Robust Django admin panel for managing files, translations, and user permissions.
+- **⚛️ React Frontend (Vite)**  
+  Fast and modern frontend for interacting with file selection, viewing, and downloading.
 
 ---
 
 ## 🧰 Tech Stack
 
-- **Backend**: Python, Django, Django REST Framework (DRF)  
-- **Database**: SQLite  
-- **Caching**: Redis  
-- **Translation API**: Google Translate (`googletrans`)  
-- **Infrastructure**: Docker, AWS  
+- **Frontend**: React (Vite), Tailwind CSS, Axios, React Toastify  
+- **Backend**: Python, Django, Django REST Framework  
+- **Database**: SQLite (can be upgraded to PostgreSQL)  
+- **3rd-party APIs**: Google Drive API
+
+---
+
+## 🖥️ Dashboard Features
+
+- File dropdown with list of uploaded files from Django backend
+- "View" button triggers API to open the file (e.g., with slug `text-1`)
+- "Download" button downloads the selected file
+- Uses React Toastify for user feedback (errors, success)
 
 ---
 
