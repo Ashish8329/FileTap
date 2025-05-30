@@ -38,3 +38,7 @@ debug.log
 
 # OS-generated files
 .D
+
+credentials.json
+credentials/
+*.json
