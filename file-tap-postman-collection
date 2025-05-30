@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "44e8755c-7276-49c8-8608-160d1357fc49",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34213868",
+		"_collection_link": "https://brahma-team.postman.co/workspace/file-tap-assesment~3b2040f2-315d-4028-8595-83322483c9fa/collection/34213868-44e8755c-7276-49c8-8608-160d1357fc49?action=share&source=collection_link&creator=34213868"
+	},
+	"item": [
+		{
+			"name": "download file",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/file-management/check-file?file_name=text-1.txt",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"file-management",
+						"check-file"
+					],
+					"query": [
+						{
+							"key": "file_name",
+							"value": "text-1.txt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "list files",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/file-management/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"file-management",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "view file",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/file-management/view-file?file_name=text-12.txt",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"file-management",
+						"view-file"
+					],
+					"query": [
+						{
+							"key": "file_name",
+							"value": "text-12.txt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add files",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "file",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/akash/OneDrive/Desktop/text-1.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/file-management/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"file-management",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
